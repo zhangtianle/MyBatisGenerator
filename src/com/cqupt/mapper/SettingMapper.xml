@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cqupt.DAO.inter.SettingMapper" >
+  <resultMap id="BaseResultMap" type="com.cqupt.model.pojo.Setting" >
+    <id column="settingId" property="settingid" jdbcType="INTEGER" />
+    <result column="settingName" property="settingname" jdbcType="VARCHAR" />
+    <result column="settingValue" property="settingvalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    settingId, settingName, settingValue
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cqupt.model.pojo.SettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from setting
+    where settingId = #{settingid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from setting
+    where settingId = #{settingid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cqupt.model.pojo.SettingExample" >
+    delete from setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cqupt.model.pojo.Setting" >
+    insert into setting (settingId, settingName, settingValue
+      )
+    values (#{settingid,jdbcType=INTEGER}, #{settingname,jdbcType=VARCHAR}, #{settingvalue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cqupt.model.pojo.Setting" >
+    insert into setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="settingid != null" >
+        settingId,
+      </if>
+      <if test="settingname != null" >
+        settingName,
+      </if>
+      <if test="settingvalue != null" >
+        settingValue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="settingid != null" >
+        #{settingid,jdbcType=INTEGER},
+      </if>
+      <if test="settingname != null" >
+        #{settingname,jdbcType=VARCHAR},
+      </if>
+      <if test="settingvalue != null" >
+        #{settingvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cqupt.model.pojo.SettingExample" resultType="java.lang.Integer" >
+    select count(*) from setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update setting
+    <set >
+      <if test="record.settingid != null" >
+        settingId = #{record.settingid,jdbcType=INTEGER},
+      </if>
+      <if test="record.settingname != null" >
+        settingName = #{record.settingname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settingvalue != null" >
+        settingValue = #{record.settingvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update setting
+    set settingId = #{record.settingid,jdbcType=INTEGER},
+      settingName = #{record.settingname,jdbcType=VARCHAR},
+      settingValue = #{record.settingvalue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.model.pojo.Setting" >
+    update setting
+    <set >
+      <if test="settingname != null" >
+        settingName = #{settingname,jdbcType=VARCHAR},
+      </if>
+      <if test="settingvalue != null" >
+        settingValue = #{settingvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where settingId = #{settingid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cqupt.model.pojo.Setting" >
+    update setting
+    set settingName = #{settingname,jdbcType=VARCHAR},
+      settingValue = #{settingvalue,jdbcType=VARCHAR}
+    where settingId = #{settingid,jdbcType=INTEGER}
+  </update>
+</mapper>

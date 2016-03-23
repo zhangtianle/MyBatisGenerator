@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cqupt.DAO.inter.ResearchteamMapper" >
+  <resultMap id="BaseResultMap" type="com.cqupt.model.pojo.Researchteam" >
+    <id column="researchTeamId" property="researchteamid" jdbcType="INTEGER" />
+    <result column="TeamName" property="teamname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    researchTeamId, TeamName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cqupt.model.pojo.ResearchteamExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from researchteam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from researchteam
+    where researchTeamId = #{researchteamid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from researchteam
+    where researchTeamId = #{researchteamid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cqupt.model.pojo.ResearchteamExample" >
+    delete from researchteam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cqupt.model.pojo.Researchteam" >
+    insert into researchteam (researchTeamId, TeamName)
+    values (#{researchteamid,jdbcType=INTEGER}, #{teamname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cqupt.model.pojo.Researchteam" >
+    insert into researchteam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="researchteamid != null" >
+        researchTeamId,
+      </if>
+      <if test="teamname != null" >
+        TeamName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="researchteamid != null" >
+        #{researchteamid,jdbcType=INTEGER},
+      </if>
+      <if test="teamname != null" >
+        #{teamname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cqupt.model.pojo.ResearchteamExample" resultType="java.lang.Integer" >
+    select count(*) from researchteam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update researchteam
+    <set >
+      <if test="record.researchteamid != null" >
+        researchTeamId = #{record.researchteamid,jdbcType=INTEGER},
+      </if>
+      <if test="record.teamname != null" >
+        TeamName = #{record.teamname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update researchteam
+    set researchTeamId = #{record.researchteamid,jdbcType=INTEGER},
+      TeamName = #{record.teamname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.model.pojo.Researchteam" >
+    update researchteam
+    <set >
+      <if test="teamname != null" >
+        TeamName = #{teamname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where researchTeamId = #{researchteamid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cqupt.model.pojo.Researchteam" >
+    update researchteam
+    set TeamName = #{teamname,jdbcType=VARCHAR}
+    where researchTeamId = #{researchteamid,jdbcType=INTEGER}
+  </update>
+</mapper>
